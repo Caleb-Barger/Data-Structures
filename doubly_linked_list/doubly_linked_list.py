@@ -20,7 +20,19 @@ class DoublyLinkedList:
 
     def __len__(self):
         return self.length
-    
+
+    def _with_one_element(self, new_node):
+
+        # assign this new node to the head and tail
+        self.head = new_node
+        self.tail = new_node
+
+        # hook the nodes together
+        self.head.next = new_node
+        self.head.prev = None
+        self.tail.next = None
+        self.tail.prev = new_node
+
     """
     Wraps the given value in a ListNode and inserts it 
     as the new head of the list. Don't forget to handle 
@@ -32,10 +44,7 @@ class DoublyLinkedList:
 
         # if there is no head then
         if self.head is None:
-
-            # assign this new node to the head and tail
-            self.head = new_node
-            self.tail = new_node
+            self._with_one_element(new_node)
 
         # if head is pointing to a value that is not none then
         if self.head.next is not None:
@@ -47,7 +56,7 @@ class DoublyLinkedList:
             # assign the current head to the new node
             self.head = new_node
 
-            # increment the size by 1
+            # increment length
             self.length += 1
         
     """
@@ -56,16 +65,54 @@ class DoublyLinkedList:
     Returns the value of the removed Node.
     """
     def remove_from_head(self):
-        pass
-            
+
+        # if the current head is None
+        if self.head is None:
+            return None
+
+        # store a refrence to the old_head
+        value = self.head
+        # set the new head as whaterver the .next prop was on the old_head
+        self.head = self.head.next
+        # set the .prev prop on the new head to None
+        self.head.prev = None
+
+        # decrement length
+        self.length -= 1
+
+        # return the old_head
+        return value
+
     """
     Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
     the old tail node's next pointer accordingly.
     """
     def add_to_tail(self, value):
-        pass
+
+        # create a new node
+        new_node = ListNode(value)
+
+        # check if tail is None
+        if not self.tail:
+            # call the _with_one_element method
+            # passing in new node
+            self._with_one_element(new_node)
             
+        # if tail is not None then
+        if self.tail is not None:
+            # set tail.next to the new node
+            self.tail.next = new_node
+            # set the new_node.prev to the tail
+            new_node.prev = self.tail
+            # set the tail to new_node
+            self.tail = new_node
+            # set tail.next to none
+            self.tail.next = None
+            
+        # increment length
+        self.length += 1
+    
     """
     Removes the List's current tail node, making the 
     current tail's previous node the new tail of the List.
