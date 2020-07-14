@@ -27,7 +27,7 @@ class DoublyLinkedList:
         self.head = new_node
         self.tail = new_node
 
-        # hook the nodes together
+        # link nodes together
         self.head.next = new_node
         self.head.prev = None
         self.tail.next = None
@@ -67,7 +67,7 @@ class DoublyLinkedList:
     def remove_from_head(self):
 
         # if the current head is None
-        if self.head is None:
+        if not self.head:
             return None
 
         # store a refrence to the old_head
@@ -81,7 +81,7 @@ class DoublyLinkedList:
         self.length -= 1
 
         # return the old_head
-        return value
+        return value.value
 
     """
     Wraps the given value in a ListNode and inserts it 
@@ -119,15 +119,59 @@ class DoublyLinkedList:
     Returns the value of the removed Node.
     """
     def remove_from_tail(self):
-        pass
-            
+        # if the tail is None
+        if not self.tail:
+            return None
+   
+        # store refrence to tail
+        value = self.tail
+        # set tail as old tail .prev
+        self.tail = value.prev
+        # set tail .next to None
+        self.tail.next = None
+
+        # decrement length
+        self.length -= 1
+
+        # return old tail
+        return value.value
+
     """
     Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List.
     """
     def move_to_front(self, node):
-        pass
-        
+
+        # iterate through the ll
+        current_node = self.head
+        while current_node is not None:
+            if current_node.next is node:
+                
+                # hold a refrence to i.next as target
+                target = current_node.next
+
+            current_node = current_node.next
+
+            
+        # check if target is head or tail
+        # & handle accordingly
+        if self.head == target:
+            return
+        if self.tail == target:
+            self.tail = self.tail.prev
+            self.tail.next = None
+
+        # set target.prev.next to target.next
+        target.prev.next = target.next
+        # set target.next to head
+        self.head.prev = target
+        # set target.prev to None        
+        target.next = self.head
+        # set head.prev to target        
+        target.prev = None
+        # set head to target        
+        self.head = target
+
     """
     Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List.
@@ -148,3 +192,7 @@ class DoublyLinkedList:
     """
     def get_max(self):
         pass
+
+
+
+dll = DoublyLinkedList()
