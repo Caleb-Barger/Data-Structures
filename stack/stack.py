@@ -19,13 +19,13 @@ class Stack:
         return self.size
 
     def push(self, value):
-        self.storage.insert(0, value)
         self.size += 1
+        self.storage.append(value)
 
     def pop(self):
         if not self.storage:
             return None
         self.size -= 1
-        return self.storage.pop(0)
+        return self.storage.pop()
         
 
