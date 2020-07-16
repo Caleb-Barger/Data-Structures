@@ -128,7 +128,7 @@ class BSTNode:
             if current.left:
                 queue.append(current.left)
             if current.right:
-                queue.append(current.right)\
+                queue.append(current.right)
 
             fn(current.value)
 
@@ -137,8 +137,16 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
+        # if node left than call self with node.left
         if node.left:
-            return self.in_order_print(node.left)
+            self.in_order_print(node.left)
+        # if not a node.right or is a node.right print self
+        if not node.right or node.right:
+            print(node.value)
+        # if node.right call self with node.right
+        if node.right:
+            self.in_order_print(node.right)
+        
         
        
 
