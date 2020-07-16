@@ -141,27 +141,52 @@ class BSTNode:
         if node.left:
             self.in_order_print(node.left)
         # if not a node.right or is a node.right print self
-        if not node.right or node.right:
+        if not node.right or node.right:    
             print(node.value)
         # if node.right call self with node.right
         if node.right:
             self.in_order_print(node.right)
-        
-        
-       
-
-
-
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        from collections import deque
+
+        queue = deque()
+        queue.append(node)
+        l = []
+
+        while len(queue) > 0:
+            current = queue.popleft()
+            l.append(current.value)
+
+            if current.left:
+                queue.append(current.left)
+
+            if current.right:
+                queue.append(current.right)  
+
+        l.sort()
+        for n in l:
+            print(n)
+        
+            
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        stack = []
+        stack.append(node)
+
+        while len(stack) > 0:
+            c = stack.pop()
+            print(c.value)
+
+            if c.right:
+                stack.append(c.right)
+            if c.left:
+                stack.append(c.left)
+        
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -181,6 +206,6 @@ bst.insert(5)
 bst.insert(7)
 bst.insert(6)
 bst.insert(3)
-bst.in_order_print(bst)
+bst.dft_print(bst)
 
 
