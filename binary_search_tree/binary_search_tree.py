@@ -85,14 +85,78 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        # call anon func on self.value
+        fn(self.value)
+        # if the node has a left child pass the anon func to it
+        if self.left:
+            self.left.for_each(fn)
+        # if the node has a right child pass the anon func to it
+        if self.right:
+            self.right.for_each(fn)
+
+    def iterative_depth_first_for_each(self, fn):
+        # DFT - depth first transversal (LIFO)
+        # LIFO = STACK
+        stack = []
+        stack.append(self)
+
+        # as long as the stack has nodes in it
+        # there are more nodes to traverse
+        while len(stack) > 0:
+            current = stack.pop()
+
+            if current.right:
+                stack.append(current.right)
+
+            if current.left:
+                stack.append(current.left)
+
+            # call the anon func
+            fn(current.value)
+
+    def iterative_bredth_first_for_each(self, fn):
+        from collections import deque
+        # BFT: FIFO
+        # queue data structure to do this
+        queue = deque()
+        queue.append(self)
+
+        # continue to travel as long as there are more nodes
+        while len(queue) > 0:
+            current = queue.popleft()
+
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)\
+
+            fn(current.value)
 
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        # if there is a no right we are done
+        if not node.right:
+            return 
+        # if there is a left way to go then 
+        if not node.left:
+            # call self with node.left
+            self.in_order_print(node.left)
+        # if not print value
+        else:
+            print(node.value)
+
+        # if there is a right way to go then 
+        if not node.right:
+            # call self with node.right
+            self.in_order_print(node.right)
+        # if not print value
+        else:
+            print(node.value)
+
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -116,7 +180,12 @@ class BSTNode:
         pass
 
 
-bst = BSTNode(10)
-bst.insert(11)
-bst.insert(4)
-print(bst.get_max())
+bst = BSTNode(1)
+bst.insert(8)
+bst.insert(5)
+bst.insert(7)
+bst.insert(6)
+bst.insert(3)
+bst.in_order_print(bst)
+
+
